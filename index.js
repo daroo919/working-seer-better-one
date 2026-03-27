@@ -15,7 +15,7 @@ const LOG_CHANNEL_ID = process.env.LOG_CHANNEL_ID;
 const WELCOME_CHANNEL_ID = process.env.WELCOME_CHANNEL_ID;
 
 // 허용 역할
-const ALLOWED_ROLES = ["1484178229886713856"];
+const ALLOWED_ROLES = ["1484178229886713856","1424211270067949598"];
 
 // ======================
 // WARN DB
