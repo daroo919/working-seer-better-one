@@ -15,7 +15,7 @@ const LOG_CHANNEL_ID = process.env.LOG_CHANNEL_ID;
 const WELCOME_CHANNEL_ID = process.env.WELCOME_CHANNEL_ID;
 
 // ======================
-// 권한 설정
+// 권한
 // ======================
 const ALLOWED_ROLES = [
   "1484178229886713856",
@@ -67,73 +67,96 @@ new SlashCommandBuilder()
 .setName("clear")
 .setDescription("채팅 삭제")
 .addIntegerOption(o =>
-  o.setName("amount").setRequired(true)
+  o.setName("amount")
+   .setDescription("삭제할 메시지 수")
+   .setRequired(true)
 ),
 
 new SlashCommandBuilder()
 .setName("kick")
 .setDescription("유저 킥")
 .addUserOption(o =>
-  o.setName("user").setRequired(true)
+  o.setName("user")
+   .setDescription("킥할 유저")
+   .setRequired(true)
 ),
 
 new SlashCommandBuilder()
 .setName("ban")
 .setDescription("유저 밴")
 .addUserOption(o =>
-  o.setName("user").setRequired(true)
+  o.setName("user")
+   .setDescription("밴할 유저")
+   .setRequired(true)
 ),
 
 new SlashCommandBuilder()
 .setName("unban")
 .setDescription("밴 해제")
 .addStringOption(o =>
-  o.setName("userid").setRequired(true)
+  o.setName("userid")
+   .setDescription("유저 ID")
+   .setRequired(true)
 ),
 
 new SlashCommandBuilder()
 .setName("timeout")
 .setDescription("타임아웃")
 .addUserOption(o =>
-  o.setName("user").setRequired(true)
+  o.setName("user")
+   .setDescription("대상 유저")
+   .setRequired(true)
 )
 .addIntegerOption(o =>
-  o.setName("minutes").setRequired(true)
+  o.setName("minutes")
+   .setDescription("시간(분)")
+   .setRequired(true)
 ),
 
 new SlashCommandBuilder()
 .setName("warn")
-.setDescription("경고")
+.setDescription("경고 추가")
 .addUserOption(o =>
-  o.setName("user").setRequired(true)
+  o.setName("user")
+   .setDescription("경고 대상")
+   .setRequired(true)
 )
 .addStringOption(o =>
   o.setName("reason")
+   .setDescription("경고 사유")
 ),
 
 new SlashCommandBuilder()
 .setName("warnings")
 .setDescription("경고 조회")
 .addUserOption(o =>
-  o.setName("user").setRequired(true)
+  o.setName("user")
+   .setDescription("조회할 유저")
+   .setRequired(true)
 ),
 
 new SlashCommandBuilder()
 .setName("ai")
 .setDescription("AI 질문")
 .addStringOption(o =>
-  o.setName("prompt").setRequired(true)
+  o.setName("prompt")
+   .setDescription("질문 내용")
+   .setRequired(true)
 ),
 
-// ⭐ 재판 추가
+// ✅ 재판
 new SlashCommandBuilder()
 .setName("재판")
-.setDescription("AI 재판")
+.setDescription("AI 재판 시스템")
 .addUserOption(o =>
-  o.setName("피고").setRequired(true)
+  o.setName("피고")
+   .setDescription("재판 받을 유저")
+   .setRequired(true)
 )
 .addStringOption(o =>
-  o.setName("이유").setRequired(true)
+  o.setName("이유")
+   .setDescription("고소 이유")
+   .setRequired(true)
 )
 
 ].map(c => c.toJSON());
@@ -190,7 +213,7 @@ async function judge(defendant, reason, defense) {
           content: `
 너는 냉정하고 논리적인 판사다.
 히구루마 히로미처럼 말한다.
-감정 없이 논리로 판단한다.
+감정 없이 판단하고 책임을 강조한다.
 `
         },
         {
@@ -223,7 +246,7 @@ if (!interaction.isChatInputCommand()) return;
 
 const cmd = interaction.commandName;
 
-// ⭐ 재판은 권한 예외
+// ✅ 재판만 권한 예외
 if (cmd !== "재판" && !hasRole(interaction.member)) {
   return interaction.reply({
     content: "❌ 권한 없음",
@@ -284,7 +307,7 @@ if (cmd === "재판") {
 }
 
 // ======================
-// WARN (버그 수정 포함)
+// WARN (안정화)
 // ======================
 if (cmd === "warn") {
 
